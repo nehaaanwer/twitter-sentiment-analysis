@@ -1,15 +1,30 @@
-# Twitter Sentiment Analysis using Bidirectional LSTM
+# Twitter Sentiment Analysis using BiLSTM + FastAPI + Streamlit
 
 ## 📌 Project Overview
-This project implements a multi-class Twitter sentiment classification system using Natural Language Processing (NLP) techniques and a Bidirectional LSTM deep learning model.
+This project implements a production-style Twitter Sentiment Analysis system using a Bidirectional LSTM deep learning model.
 
-The system performs end-to-end processing:
-- Text preprocessing and cleaning
-- Tokenization and sequence padding
-- Model training and evaluation
-- Deployment using Streamlit for real-time prediction
+The system follows a client-server architecture where:
 
-This project demonstrates practical implementation of sequence modeling for NLP tasks.
+Streamlit (Frontend UI)  
+→ communicates with  
+FastAPI (Backend Inference API)  
+→ which loads and runs  
+BiLSTM Model  
+
+The backend must be active for the frontend to function.
+
+---
+
+## 🏗️ System Architecture
+
+User Input  
+→ Streamlit Interface  
+→ HTTP Request to FastAPI  
+→ Model Prediction  
+→ JSON Response  
+→ Displayed on UI  
+
+The API can also be tested independently using FastAPI Swagger documentation.
 
 ---
 
@@ -20,26 +35,24 @@ Embedding Layer
 → Dense Layer  
 → Softmax Output Layer  
 
-The Bidirectional LSTM processes text sequences in both forward and backward directions, allowing better contextual understanding of sentence structure.
-
----
-
-## 📊 Dataset
-- Twitter sentiment dataset  
-- Multi-class classification problem  
-- Text data preprocessed using tokenization and padding  
-
-(Note: Dataset files are not included in this repository.)
+The Bidirectional LSTM processes text in both forward and backward directions to capture contextual dependencies.
 
 ---
 
 ## ⚙️ Tech Stack
-- Python  
-- TensorFlow / Keras  
-- Scikit-learn  
-- Pandas  
-- NumPy  
-- Streamlit  
+
+### Machine Learning
+- TensorFlow / Keras
+- Scikit-learn
+- Pandas
+- NumPy
+
+### Backend
+- FastAPI
+- Uvicorn
+
+### Frontend
+- Streamlit
 
 ---
 
@@ -48,14 +61,14 @@ The Bidirectional LSTM processes text sequences in both forward and backward dir
 ```
 mini_project_3/
 │
-├── preprocessing.py      # Text cleaning and preprocessing
-├── model.py              # BiLSTM model architecture
-├── train.py              # Model training script
-├── streamlit_app.py      # Streamlit web interface
-├── config.py             # Configuration parameters
-├── data_loader.py        # Dataset loading utilities
-├── tokenizer.py          # Tokenization logic
-└── save_load.py          # Model save/load utilities
+├── app.py              # FastAPI backend (API endpoints)
+├── streamlit_app.py    # Streamlit frontend
+├── model.py            # BiLSTM architecture
+├── train.py            # Model training pipeline
+├── preprocessing.py    # Text cleaning
+├── tokenizer.py        # Tokenization utilities
+├── config.py           # Configuration parameters
+└── save_load.py        # Model persistence utilities
 ```
 
 ---
@@ -67,32 +80,39 @@ mini_project_3/
 pip install -r requirements.txt
 ```
 
-### 2️⃣ Train the model
+### 2️⃣ Start FastAPI backend
 ```
-python train.py
+uvicorn app:app --reload
 ```
 
-### 3️⃣ Launch the web application
+Access Swagger API documentation at:
+```
+http://127.0.0.1:8000/docs
+```
+
+### 3️⃣ Start Streamlit frontend
 ```
 streamlit run streamlit_app.py
 ```
 
+Note: FastAPI must be running before launching the Streamlit app.
+
 ---
 
 ## 🎯 Key Highlights
-- Implemented sequence modeling using Bidirectional LSTM
-- Designed modular and maintainable project structure
-- Applied NLP preprocessing pipeline for text normalization
-- Built an interactive web interface for real-time predictions
-- Structured project following production-style organization
+- Built an API-based ML inference system
+- Designed modular client-server architecture
+- Integrated FastAPI backend with Streamlit frontend
+- Enabled independent API testing via Swagger UI
+- Structured project using production-style separation of concerns
 
 ---
 
 ## 📈 Future Improvements
-- Hyperparameter tuning
-- Model optimization and regularization
-- Deployment using cloud platforms
-- Integration with live Twitter API
+- Docker containerization
+- Cloud deployment
+- Load balancing for API scalability
+- Authentication layer for secure API access
 
 ---
 
